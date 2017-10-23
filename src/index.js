@@ -10,10 +10,6 @@ function Square(props){
     );
 }
 
-function PlayAgain(props){
-  return <button className="playAgain">Spila aftur</button>;
-}
-
 class Board extends React.Component {
   renderSquare(i) {
     return (
@@ -92,14 +88,14 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
     //map(function(currentValue, index.....
     const moves = history.map((step, move) => {
-      const desc = move ?
-        'Leikur númer ' + move:
-        'Upphaf leiks';
-      return (
-        <li key={move}>
-          <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
-        </li>
-      );
+      if(move > 0){
+        const desc = 'Leikur númer ' + move;
+        return (
+          <p key={move}>
+            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          </p>
+        );
+      } else { return null; }
     });
 
     let status;
@@ -114,11 +110,11 @@ class Game extends React.Component {
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}/>
-          <PlayAgain onClick={() => this.playAgain()} />
+          <button onClick={() => this.playAgain()}>Spila aftur</button>
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <div>{moves}</div>
         </div>
       </div>
     );
